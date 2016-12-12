@@ -11,7 +11,7 @@ function restart () {
 }
 
 function playTurn (index) {
-  if ((board[index] !== null) || (isGameOver() == true)) {
+  if ((board[index] !== null) || (isGameOver() === true)) {
     return false
   }
   board[index] = currentPlayer  // currentPlayer fills board[i] spot with its mark
@@ -24,42 +24,31 @@ function playTurn (index) {
 }
 
 function whoWon () {
-  for (var i = 0; i < 3; i++) {
-    if ((board[i] === board[i + 3]) && (board[i] === board[i + 6])) {
-      return board[i] //if column filled, win
-    }
-  }
-  for (var i = 0; i <=6; i+=3 ) {
-  if ((board[i] === board[i + 1]) && (board[i] === board[i + 2])) {
-      return board[i] // if row filled, win
-    }
-  }
-  // console.log(whoWon([0, 3, 6]))
-  if (board[0] === board[4] && board[0] === board[8] ||
-    board[2] === board[4] && board[2] === board[6]) {
-    return board[4] // check for the two diagonal conditions
-  }
-  if (isBoardFull()) {
-    return 3
-  }
+  if (board[0] && board[0] === board[3] && board[3] === board[6]) return board[0];
+  if (board[1] && board[1] === board[4] && board[4] === board[7]) return board[1];
+  if (board[2] && board[2] === board[5] && board[5] === board[8]) return board[2];
+  if (board[0] && board[0] === board[1] && board[1] === board[2]) return board[0];
+  if (board[3] && board[3] === board[4] && board[4] === board[5]) return board[3];
+  if (board[6] && board[6] === board[7] && board[7] === board[8]) return board[6];
+  if (board[0] && board[0] === board[4] && board[4] === board[8]) return board[0];
+  if (board[2] && board[2] === board[4] && board[4] === board[6]) return board[2];
+  if (isBoardFull()) return 3;
   return 0
-  }
+}
 
 
-function isBoardFull () {
-  for (var i in board) {
-    if (board[i] === null) {
-      return false
-    }
+function isBoardFull () { 
+  if (board[0] && board[1] && board[2] && board[3] && board[4] 
+    && board[5] && board[6] && board[7] && board[8]) {
+    return true
   }
-  return true
+  return false
 }
 
 function isGameOver () {
-    if (isBoardFull() || whoWon() === 0) {
-      return true
-    }
-    return false
+  if (isBoardFull() || whoWon() !== 0) {
+    return true
   }
-board = [null,1,null,null,1,null,null,1,null]
-console.log(whoWon())
+  return false
+}
+
